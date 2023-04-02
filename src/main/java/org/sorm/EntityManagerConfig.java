@@ -9,6 +9,7 @@ public class EntityManagerConfig {
     private final String dbUsername = System.getenv(DB_USERNAME);
     private final String dbPassword = System.getenv(DB_PASSWORD);
     private final PrimaryKeyGenerator idGenerator = new PrimaryKeyGenerator();
+    private final EntityConverter converter = new EntityConverter();
 
     public EntityManagerConfig() {
     }
@@ -27,6 +28,10 @@ public class EntityManagerConfig {
 
     public PrimaryKeyGenerator getIdGenerator() {
         return idGenerator;
+    }
+
+    public EntityConverter getConverter() {
+        return converter;
     }
 
     static class EnvironmentVariables {

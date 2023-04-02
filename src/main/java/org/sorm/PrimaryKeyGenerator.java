@@ -16,11 +16,15 @@ public class PrimaryKeyGenerator {
    private AtomicLong longIdGenerator = new AtomicLong(0L);
    private AtomicInteger integerIdGenerator = new AtomicInteger(0);
 
-   public <T> void extracted(T entity, Metamodel metamodel, Class<?> primaryKeyType, PreparedStatement statement) throws Exception {
+   public <T> void setPKFieldAndStatement(
+           T entity,
+           Metamodel metamodel,
+           Class<?> primaryKeyType,
+           PreparedStatement statement) throws Exception {
 
       if (primaryKeyType != long.class &&
-          primaryKeyType != int.class &&
-          primaryKeyType != UUID.class) {
+              primaryKeyType != int.class &&
+              primaryKeyType != UUID.class) {
          throw illegalPrimaryKeyType("long, int, UUID");
       }
 
@@ -38,7 +42,7 @@ public class PrimaryKeyGenerator {
          field.setAccessible(true);
          field.set(entity, id);
 
-         statement.setLong(1, id);
+         statement.setInt(1, id);
       }
       if (primaryKeyType == UUID.class) {
          UUID id = randomUUID();
@@ -46,6 +50,28 @@ public class PrimaryKeyGenerator {
          field.setAccessible(true);
          field.set(entity, id);
 
+         statement.setString(1, id.toString());
+      }
+   }
+
+   public <T> void setPKStatement(
+           Object primaryKey,
+           PreparedStatement statement) throws Exception {
+      System.out.println("Debug");
+      if (primaryKey.getClass() != Long.class &&
+              primaryKey.getClass() != Integer.class &&
+              primaryKey.getClass() != UUID.class) {
+         throw illegalPrimaryKeyType("long, int, UUID");
+      }
+
+      if (primaryKey.getClass() == Long.class) {
+         statement.setLong(1, (long) primaryKey);
+      }
+      if (primaryKey.getClass() == Integer.class) {
+         statement.setInt(1, (int) primaryKey);
+      }
+      if (primaryKey.getClass() == UUID.class) {
+         UUID id = randomUUID();
          statement.setString(1, id.toString());
       }
    }

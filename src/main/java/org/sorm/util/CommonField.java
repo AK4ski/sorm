@@ -1,5 +1,11 @@
 package org.sorm.util;
 
+import java.lang.reflect.Field;
+
 interface CommonField {
-    //TODO: reuse the common methods;
+   String getName();
+
+   Class<?> getType();
+
+   Field getField();
 }

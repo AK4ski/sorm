@@ -4,13 +4,13 @@ import org.sorm.Column;
 import org.sorm.PrimaryKey;
 
 public class Person {
-    @PrimaryKey
+    @PrimaryKey(name = "ID")
     private long id;
 
-    @Column
+    @Column(name = "AGE")
     private int age;
 
-    @Column
+    @Column(name = "NAME")
     private String name;
 
     public Person() {
@@ -43,5 +43,14 @@ public class Person {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", age=" + age +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

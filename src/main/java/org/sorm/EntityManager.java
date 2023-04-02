@@ -8,5 +8,5 @@ public interface EntityManager<T> {
 
     void persist(T entity);
 
-    T read(long primaryKey, Class<T> clzz);
+    T find(Object primaryKey, Class<T> clzz);
 }
